@@ -1,0 +1,5 @@
+.vscode
+app
+dist
+main
+node_modules
