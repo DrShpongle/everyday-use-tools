@@ -22,7 +22,7 @@ const TriangleTypes: React.FC<{
       <label
         htmlFor="type-equilateral"
         className={cx(
-          'flex items-center space-x-1',
+          'flex items-center space-x-1 duration-150',
           isEquilateralAllowed ? 'cursor-pointer' : 'opacity-25 cursor-default',
         )}
       >
