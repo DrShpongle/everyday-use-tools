@@ -10,10 +10,39 @@ const capitalizeString = (str: string): string => {
   return firstLetterCap + remainingLetters
 }
 
+// type Direction =
+//   | 'top'
+//   | 'topRight'
+//   | 'right'
+//   | 'bottomRight'
+//   | 'bottom'
+//   | 'bottomLeft'
+//   | 'left'
+//   | 'topLeft'
+
+// type Type = 'equilateral' | 'isosceles' | 'scalene'
+
+interface TriangleParams {
+  // direction: Direction
+  // type: Type
+  direction: string
+  type: string
+  positionAndType: string
+  sizes: {
+    width: number
+    left: number
+    right: number
+    height: number
+    top: number
+    bottom: number
+  }
+}
+
 const Home = () => {
-  const [triangleParams, setTriangleParams] = React.useState({
+  const [triangleParams, setTriangleParams] = React.useState<TriangleParams>({
     direction: 'top',
     type: 'isosceles',
+    positionAndType: 'topIsosceles',
     sizes: {
       width: 0,
       left: 0,
@@ -26,14 +55,19 @@ const Home = () => {
   const isEquilateralAllowed = ORTHOGONAL_DIRECTIONS.includes(
     triangleParams.direction,
   )
-  const positionAndType =
-    triangleParams.direction + capitalizeString(triangleParams.type)
-  console.log('triangleParams:', triangleParams.sizes)
+  console.log('positionAndType:', triangleParams.positionAndType)
 
   const directionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTriangleParams({
       ...triangleParams,
-      direction: e.target.value,
+      direction: e.target.value as string,
+      positionAndType:
+        e.target.value +
+        (DIAGONAL_DIRECTIONS.includes(e.target.value) &&
+        triangleParams.type === 'equilateral'
+          ? 'Isosceles'
+          : capitalizeString(triangleParams.type)),
+      // force switch to 'isosceles' type if there is diagonal direction and 'equilateral' type
       ...(DIAGONAL_DIRECTIONS.includes(e.target.value) &&
         triangleParams.type === 'equilateral' && {type: 'isosceles'}),
     })
@@ -43,14 +77,19 @@ const Home = () => {
     setTriangleParams({
       ...triangleParams,
       type: e.target.value,
+      positionAndType:
+        triangleParams.direction + capitalizeString(e.target.value),
     })
   }
 
   return (
     <>
       <Head>
-        <title>CSS Triangles generator 🔻</title>
+        <title>Generators</title>
       </Head>
+      <Link href="/triangle-generator">
+        <a>triangle generator</a>
+      </Link>
       <div className="w-full h-full flex flex-col space-y-12 items-center justify-center min-h-screen">
         {/* Direction */}
         <div className="space-y-3">
@@ -200,7 +239,8 @@ const Home = () => {
                 key={item.key}
                 className={cx(
                   'flex justify-end items-center bg-white z-10 relative space-x-3',
-                  !item.schema.includes(positionAndType) && 'opacity-25',
+                  !item.schema.includes(triangleParams.positionAndType) &&
+                    'opacity-25',
                 )}
               >
                 <span className="capitalize">{item.key}:</span>
@@ -220,7 +260,9 @@ const Home = () => {
                       },
                     })
                   }}
-                  disabled={!item.schema.includes(positionAndType)}
+                  disabled={
+                    !item.schema.includes(triangleParams.positionAndType)
+                  }
                   className="w-16 md:w-20 flex-shrink-0 appearance-none rounded p-2 transition-colors duration-150 border border-gray-400 focus:outline-none"
                 />
               </label>
