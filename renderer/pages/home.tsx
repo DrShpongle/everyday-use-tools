@@ -55,7 +55,6 @@ const Home = () => {
   const isEquilateralAllowed = ORTHOGONAL_DIRECTIONS.includes(
     triangleParams.direction,
   )
-  console.log('positionAndType:', triangleParams.positionAndType)
 
   const directionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTriangleParams({

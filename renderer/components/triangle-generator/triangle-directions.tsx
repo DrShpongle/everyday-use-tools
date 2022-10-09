@@ -1,18 +1,28 @@
 import * as React from 'react'
 import cx from 'classnames'
 
-import {DIAGONAL_DIRECTIONS} from './constants'
-import {TriangleParams} from './types'
+import {DIAGONAL_DIRECTIONS} from './_constants'
+import {TriangleParams} from './_types'
 import {IconArrowUp} from '../../lib/icons'
 
-const capitalizeString = (str: string): string => {
-  const firstLetter = str.charAt(0)
-  const firstLetterCap = firstLetter.toUpperCase()
-  const remainingLetters = str.slice(1)
-  return firstLetterCap + remainingLetters
-}
+import {capitalizeString} from '../../utils'
 
-const TriangleDirectionItem = ({item, params, setParams}) => {
+const TriangleDirection = ({item, params, setParams}) => {
+  const switchDirectionHandler = () => {
+    setParams({
+      ...params,
+      direction: item.direction,
+      positionAndType:
+        item.direction +
+        (DIAGONAL_DIRECTIONS.includes(item.direction) &&
+        params.type === 'equilateral'
+          ? 'Isosceles'
+          : capitalizeString(params.type)),
+      // force switch to 'isosceles' type if there is diagonal direction and 'equilateral' type
+      ...(DIAGONAL_DIRECTIONS.includes(item.direction) &&
+        params.type === 'equilateral' && {type: 'isosceles'}),
+    })
+  }
   return (
     <div
       key={`key-${item.direction}`}
@@ -22,28 +32,14 @@ const TriangleDirectionItem = ({item, params, setParams}) => {
           ? 'text-gray-700 bg-gray-300'
           : 'text-gray-500 bg-gray-100',
       )}
-      onClick={() => {
-        setParams({
-          ...params,
-          direction: item.direction,
-          positionAndType:
-            item.direction +
-            (DIAGONAL_DIRECTIONS.includes(item.direction) &&
-            params.type === 'equilateral'
-              ? 'Isosceles'
-              : capitalizeString(params.type)),
-          // force switch to 'isosceles' type if there is diagonal direction and 'equilateral' type
-          ...(DIAGONAL_DIRECTIONS.includes(item.direction) &&
-            params.type === 'equilateral' && {type: 'isosceles'}),
-        })
-      }}
+      onClick={switchDirectionHandler}
     >
       <IconArrowUp className={cx('w-6 transform', item.arrowClasses)} />
     </div>
   )
 }
 
-const Directions: React.FC<{
+const TriangleDirections: React.FC<{
   params: TriangleParams
   setParams: React.Dispatch<React.SetStateAction<TriangleParams>>
 }> = ({params, setParams}) => {
@@ -51,7 +47,7 @@ const Directions: React.FC<{
     <div className="relative py-8">
       <div className="grid grid-cols-2 grid-rows-2 w-64 h-64">
         {diagonalDirections.map((item) => (
-          <TriangleDirectionItem
+          <TriangleDirection
             key={`key-${item.direction}`}
             item={item}
             params={params}
@@ -61,7 +57,7 @@ const Directions: React.FC<{
       </div>
       <div className="grid grid-cols-2 grid-rows-2 w-56 h-56 absolute left-0 top-0 right-0 bottom-0 m-auto transform rotate-45">
         {orthogonalDirections.map((item) => (
-          <TriangleDirectionItem
+          <TriangleDirection
             key={`key-${item.direction}`}
             item={item}
             params={params}
@@ -77,7 +73,7 @@ const Directions: React.FC<{
   )
 }
 
-export default Directions
+export default TriangleDirections
 
 const diagonalDirections = [
   {

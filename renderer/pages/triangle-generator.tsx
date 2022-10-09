@@ -1,9 +1,10 @@
 import * as React from 'react'
 import Head from 'next/head'
 
-import {TriangleParams} from '../components/triangle-generator/types'
+import {TriangleParams} from '../components/triangle-generator/_types'
 
-import Directions from '../components/triangle-generator/directions'
+import TriangleDirections from '../components/triangle-generator/triangle-directions'
+import TriangleTypes from '../components/triangle-generator/triangle-types'
 
 const defaultParams: TriangleParams = {
   direction: 'top',
@@ -31,7 +32,11 @@ const TriangleGenerator = () => {
         <title>CSS Triangle generator</title>
       </Head>
       <div className="w-full h-full flex flex-col space-y-12 items-center justify-center min-h-screen">
-        <Directions params={triangleParams} setParams={setTriangleParams} />
+        <TriangleDirections
+          params={triangleParams}
+          setParams={setTriangleParams}
+        />
+        <TriangleTypes params={triangleParams} setParams={setTriangleParams} />
       </div>
     </>
   )
