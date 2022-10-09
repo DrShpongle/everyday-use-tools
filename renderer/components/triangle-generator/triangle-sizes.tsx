@@ -9,7 +9,7 @@ const TriangleSizes: React.FC<{
   setParams: React.Dispatch<React.SetStateAction<TriangleParams>>
 }> = ({params, setParams}) => {
   return (
-    <div className="space-y-3">
+    <div className="grid grid-rows-3 grid-flow-col gap-3">
       {sizeInputFields.map((item) => {
         return (
           <label
