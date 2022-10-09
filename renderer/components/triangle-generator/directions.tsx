@@ -3,6 +3,7 @@ import cx from 'classnames'
 
 import {DIAGONAL_DIRECTIONS} from './constants'
 import {TriangleParams} from './types'
+import {IconArrowUp} from '../../lib/icons'
 
 const capitalizeString = (str: string): string => {
   const firstLetter = str.charAt(0)
@@ -11,128 +12,107 @@ const capitalizeString = (str: string): string => {
   return firstLetterCap + remainingLetters
 }
 
+const TriangleDirectionItem = ({item, params, setParams}) => {
+  return (
+    <div
+      key={`key-${item.direction}`}
+      className={cx(
+        'cursor-pointer border border-gray-400 hover:text-gray-700 hover:bg-gray-300 transition-colors duration-75 grid place-items-center',
+        item.direction === params.direction
+          ? 'text-gray-700 bg-gray-300'
+          : 'text-gray-500 bg-gray-100',
+      )}
+      onClick={() => {
+        setParams({
+          ...params,
+          direction: item.direction,
+          positionAndType:
+            item.direction +
+            (DIAGONAL_DIRECTIONS.includes(item.direction) &&
+            params.type === 'equilateral'
+              ? 'Isosceles'
+              : capitalizeString(params.type)),
+          // force switch to 'isosceles' type if there is diagonal direction and 'equilateral' type
+          ...(DIAGONAL_DIRECTIONS.includes(item.direction) &&
+            params.type === 'equilateral' && {type: 'isosceles'}),
+        })
+      }}
+    >
+      <IconArrowUp className={cx('w-6 transform', item.arrowClasses)} />
+    </div>
+  )
+}
+
 const Directions: React.FC<{
   params: TriangleParams
   setParams: React.Dispatch<React.SetStateAction<TriangleParams>>
 }> = ({params, setParams}) => {
-  const directionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setParams({
-      ...params,
-      direction: e.target.value as string,
-      positionAndType:
-        e.target.value +
-        (DIAGONAL_DIRECTIONS.includes(e.target.value) &&
-        params.type === 'equilateral'
-          ? 'Isosceles'
-          : capitalizeString(params.type)),
-      // force switch to 'isosceles' type if there is diagonal direction and 'equilateral' type
-      ...(DIAGONAL_DIRECTIONS.includes(e.target.value) &&
-        params.type === 'equilateral' && {type: 'isosceles'}),
-    })
-  }
-
   return (
-    <div className="space-y-3">
-      <div className="flex justify-center space-x-4">
-        <div className="flex items-center space-x-1">
-          <input
-            type="radio"
-            name="direction"
-            id="direction-top"
-            value="top"
-            onChange={directionHandler}
-            checked={params.direction === 'top'}
+    <div className="relative py-8">
+      <div className="grid grid-cols-2 grid-rows-2 w-64 h-64">
+        {diagonalDirections.map((item) => (
+          <TriangleDirectionItem
+            key={`key-${item.direction}`}
+            item={item}
+            params={params}
+            setParams={setParams}
           />
-          <label htmlFor="direction-top">Top</label>
-        </div>
+        ))}
       </div>
-      <div className="flex justify-center space-x-16">
-        <div className="flex items-center space-x-1">
-          <label htmlFor="direction-top-left">Top left</label>
-          <input
-            type="radio"
-            name="direction"
-            id="direction-top-left"
-            value="topLeft"
-            onChange={directionHandler}
-            checked={params.direction === 'topLeft'}
+      <div className="grid grid-cols-2 grid-rows-2 w-56 h-56 absolute left-0 top-0 right-0 bottom-0 m-auto transform rotate-45">
+        {orthogonalDirections.map((item) => (
+          <TriangleDirectionItem
+            key={`key-${item.direction}`}
+            item={item}
+            params={params}
+            setParams={setParams}
           />
-        </div>
-        <div className="flex items-center space-x-1">
-          <input
-            type="radio"
-            name="direction"
-            id="direction-top-right"
-            value="topRight"
-            onChange={directionHandler}
-            checked={params.direction === 'topRight'}
-          />
-          <label htmlFor="direction-top-right">Top right</label>
-        </div>
+        ))}
       </div>
-      <div className="flex justify-center space-x-32">
-        <div className="flex items-center space-x-1">
-          <label htmlFor="direction-left">Left</label>
-          <input
-            type="radio"
-            name="direction"
-            id="direction-left"
-            value="left"
-            onChange={directionHandler}
-            checked={params.direction === 'left'}
-          />
-        </div>
-        <div className="flex items-center space-x-1">
-          <input
-            type="radio"
-            name="direction"
-            id="direction-right"
-            value="right"
-            onChange={directionHandler}
-            checked={params.direction === 'right'}
-          />
-          <label htmlFor="direction-right">Right</label>
-        </div>
-      </div>
-      <div className="flex justify-center space-x-16">
-        <div className="flex items-center space-x-1">
-          <label htmlFor="direction-bottom-left">Bottom left</label>
-          <input
-            type="radio"
-            name="direction"
-            id="direction-bottom-left"
-            value="bottomLeft"
-            onChange={directionHandler}
-            checked={params.direction === 'bottomLeft'}
-          />
-        </div>
-        <div className="flex items-center space-x-1">
-          <input
-            type="radio"
-            name="direction"
-            id="direction-bottom-right"
-            value="bottomRight"
-            onChange={directionHandler}
-            checked={params.direction === 'bottomRight'}
-          />
-          <label htmlFor="direction-bottom-right">Bottom right</label>
-        </div>
-      </div>
-      <div className="flex justify-center space-x-4">
-        <div className="flex items-center space-x-1">
-          <input
-            type="radio"
-            name="direction"
-            id="direction-bottom"
-            value="bottom"
-            onChange={directionHandler}
-            checked={params.direction === 'bottom'}
-          />
-          <label htmlFor="direction-bottom">Bottom</label>
-        </div>
-      </div>
+      <div
+        className="absolute left-0 top-0 right-0 bottom-0 m-auto bg-white border border-gray-400"
+        style={{width: '158px', height: '158px'}}
+      />
     </div>
   )
 }
 
 export default Directions
+
+const diagonalDirections = [
+  {
+    direction: 'topLeft',
+    arrowClasses: '-translate-x-8 -translate-y-8 -rotate-45',
+  },
+  {
+    direction: 'topRight',
+    arrowClasses: 'translate-x-8 -translate-y-8 rotate-45',
+  },
+  {
+    direction: 'bottomLeft',
+    arrowClasses: '-translate-x-8 translate-y-8 rotate-[225deg]',
+  },
+  {
+    direction: 'bottomRight',
+    arrowClasses: 'translate-x-8 translate-y-8 rotate-[135deg]',
+  },
+]
+
+const orthogonalDirections = [
+  {
+    direction: 'top',
+    arrowClasses: '-translate-x-6 -translate-y-6 -rotate-45',
+  },
+  {
+    direction: 'right',
+    arrowClasses: 'translate-x-6 -translate-y-6 rotate-45',
+  },
+  {
+    direction: 'left',
+    arrowClasses: '-translate-x-6 translate-y-6 rotate-[225deg]',
+  },
+  {
+    direction: 'bottom',
+    arrowClasses: 'translate-x-6 translate-y-6 rotate-[135deg]',
+  },
+]

@@ -23,6 +23,8 @@ const TriangleGenerator = () => {
   const [triangleParams, setTriangleParams] =
     React.useState<TriangleParams>(defaultParams)
 
+  console.log('triangleParams:', triangleParams.positionAndType)
+
   return (
     <>
       <Head>
