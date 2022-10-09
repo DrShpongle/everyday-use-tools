@@ -11,7 +11,7 @@ const capitalizeString = (str: string): string => {
 }
 
 const Home = () => {
-  const [state, setState] = React.useState({
+  const [triangleParams, setTriangleParams] = React.useState({
     direction: 'top',
     type: 'isosceles',
     sizes: {
@@ -23,22 +23,25 @@ const Home = () => {
       bottom: 0,
     },
   })
-  const isEquilateralAllowed = ORTHOGONAL_DIRECTIONS.includes(state.direction)
-  const positionAndType = state.direction + capitalizeString(state.type)
-  console.log('state:', state.sizes)
+  const isEquilateralAllowed = ORTHOGONAL_DIRECTIONS.includes(
+    triangleParams.direction,
+  )
+  const positionAndType =
+    triangleParams.direction + capitalizeString(triangleParams.type)
+  console.log('triangleParams:', triangleParams.sizes)
 
   const directionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState({
-      ...state,
+    setTriangleParams({
+      ...triangleParams,
       direction: e.target.value,
       ...(DIAGONAL_DIRECTIONS.includes(e.target.value) &&
-        state.type === 'equilateral' && {type: 'isosceles'}),
+        triangleParams.type === 'equilateral' && {type: 'isosceles'}),
     })
   }
 
   const typeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setState({
-      ...state,
+    setTriangleParams({
+      ...triangleParams,
       type: e.target.value,
     })
   }
@@ -59,7 +62,7 @@ const Home = () => {
                 id="direction-top"
                 value="top"
                 onChange={directionHandler}
-                checked={state.direction === 'top'}
+                checked={triangleParams.direction === 'top'}
               />
               <label htmlFor="direction-top">Top</label>
             </div>
@@ -73,7 +76,7 @@ const Home = () => {
                 id="direction-top-left"
                 value="topLeft"
                 onChange={directionHandler}
-                checked={state.direction === 'topLeft'}
+                checked={triangleParams.direction === 'topLeft'}
               />
             </div>
             <div className="flex items-center space-x-1">
@@ -83,7 +86,7 @@ const Home = () => {
                 id="direction-top-right"
                 value="topRight"
                 onChange={directionHandler}
-                checked={state.direction === 'topRight'}
+                checked={triangleParams.direction === 'topRight'}
               />
               <label htmlFor="direction-top-right">Top right</label>
             </div>
@@ -97,7 +100,7 @@ const Home = () => {
                 id="direction-left"
                 value="left"
                 onChange={directionHandler}
-                checked={state.direction === 'left'}
+                checked={triangleParams.direction === 'left'}
               />
             </div>
             <div className="flex items-center space-x-1">
@@ -107,7 +110,7 @@ const Home = () => {
                 id="direction-right"
                 value="right"
                 onChange={directionHandler}
-                checked={state.direction === 'right'}
+                checked={triangleParams.direction === 'right'}
               />
               <label htmlFor="direction-right">Right</label>
             </div>
@@ -121,7 +124,7 @@ const Home = () => {
                 id="direction-bottom-left"
                 value="bottomLeft"
                 onChange={directionHandler}
-                checked={state.direction === 'bottomLeft'}
+                checked={triangleParams.direction === 'bottomLeft'}
               />
             </div>
             <div className="flex items-center space-x-1">
@@ -131,7 +134,7 @@ const Home = () => {
                 id="direction-bottom-right"
                 value="bottomRight"
                 onChange={directionHandler}
-                checked={state.direction === 'bottomRight'}
+                checked={triangleParams.direction === 'bottomRight'}
               />
               <label htmlFor="direction-bottom-right">Bottom right</label>
             </div>
@@ -144,7 +147,7 @@ const Home = () => {
                 id="direction-bottom"
                 value="bottom"
                 onChange={directionHandler}
-                checked={state.direction === 'bottom'}
+                checked={triangleParams.direction === 'bottom'}
               />
               <label htmlFor="direction-bottom">Bottom</label>
             </div>
@@ -161,7 +164,7 @@ const Home = () => {
               id="type-equilateral"
               value="equilateral"
               onChange={typeHandler}
-              checked={state.type === 'equilateral'}
+              checked={triangleParams.type === 'equilateral'}
               disabled={!isEquilateralAllowed}
             />
           </div>
@@ -173,7 +176,7 @@ const Home = () => {
               id="type-isosceles"
               value="isosceles"
               onChange={typeHandler}
-              checked={state.type === 'isosceles'}
+              checked={triangleParams.type === 'isosceles'}
             />
           </div>
           <div className="flex items-center space-x-1">
@@ -184,7 +187,7 @@ const Home = () => {
               id="type-scalene"
               value="scalene"
               onChange={typeHandler}
-              checked={state.type === 'scalene'}
+              checked={triangleParams.type === 'scalene'}
             />
           </div>
         </div>
@@ -205,14 +208,14 @@ const Home = () => {
                   type="number"
                   inputMode="numeric"
                   pattern="[0-9]*"
-                  value={state.sizes[item.key]}
+                  value={triangleParams.sizes[item.key]}
                   max="200"
                   min="0"
                   onChange={(e) => {
-                    setState({
-                      ...state,
+                    setTriangleParams({
+                      ...triangleParams,
                       sizes: {
-                        ...state.sizes,
+                        ...triangleParams.sizes,
                         [item.key]: Number(e.target.value),
                       },
                     })
@@ -252,11 +255,8 @@ const SCHEMA_WIDTH = [
   'topLeftIsosceles',
   'topLeftScalene',
 ]
-
 const SCHEMA_LEFT = ['topScalene', 'bottomScalene']
-
 const SCHEMA_RIGHT = ['topScalene', 'bottomScalene']
-
 const SCHEMA_HEIGHT = [
   'topIsosceles',
   'topScalene',
@@ -275,9 +275,7 @@ const SCHEMA_HEIGHT = [
   'topLeftIsosceles',
   'topLeftScalene',
 ]
-
 const SCHEMA_TOP = ['rightScalene', 'leftScalene']
-
 const SCHEMA_BOTTOM = ['rightScalene', 'leftScalene']
 
 const sizeInputFields = [
