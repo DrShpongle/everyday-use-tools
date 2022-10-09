@@ -25,7 +25,7 @@ const Home = () => {
   })
   const isEquilateralAllowed = ORTHOGONAL_DIRECTIONS.includes(state.direction)
   const positionAndType = state.direction + capitalizeString(state.type)
-  console.log('positionAndType:', positionAndType)
+  console.log('state:', state.sizes)
 
   const directionHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState({
@@ -207,7 +207,7 @@ const Home = () => {
                   pattern="[0-9]*"
                   value={state.sizes[item.key]}
                   max="200"
-                  min="1"
+                  min="0"
                   onChange={(e) => {
                     setState({
                       ...state,
