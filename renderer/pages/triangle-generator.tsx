@@ -12,10 +12,10 @@ const defaultParams: TriangleParams = {
   type: 'isosceles',
   positionAndType: 'topIsosceles',
   sizes: {
-    width: 0,
+    width: 200,
     left: 0,
     right: 0,
-    height: 0,
+    height: 100,
     top: 0,
     bottom: 0,
   },
