@@ -1,26 +1,14 @@
 import * as React from 'react'
 import cx from 'classnames'
 
-import {DIAGONAL_DIRECTIONS} from './_constants'
 import {TriangleParams} from './_types'
 import {IconArrowUp} from '../../lib/icons'
-
-import {capitalizeString} from '../../utils'
 
 const TriangleDirection = ({item, params, setParams}) => {
   const switchDirectionHandler = () => {
     setParams({
       ...params,
       direction: item.direction,
-      positionAndType:
-        item.direction +
-        (DIAGONAL_DIRECTIONS.includes(item.direction) &&
-        params.type === 'equilateral'
-          ? 'Isosceles'
-          : capitalizeString(params.type)),
-      // force switch to 'isosceles' type if there is diagonal direction and 'equilateral' type
-      ...(DIAGONAL_DIRECTIONS.includes(item.direction) &&
-        params.type === 'equilateral' && {type: 'isosceles'}),
     })
   }
   return (

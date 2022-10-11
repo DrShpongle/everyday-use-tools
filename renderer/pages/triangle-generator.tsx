@@ -4,27 +4,20 @@ import Head from 'next/head'
 import {TriangleParams} from '../components/triangle-generator/_types'
 
 import TriangleDirections from '../components/triangle-generator/triangle-directions'
-import TriangleTypes from '../components/triangle-generator/triangle-types'
 import TriangleSizes from '../components/triangle-generator/triangle-sizes'
 
 const defaultParams: TriangleParams = {
   direction: 'top',
-  type: 'isosceles',
-  positionAndType: 'topIsosceles',
   sizes: {
     width: 200,
-    left: 0,
-    right: 0,
     height: 100,
-    top: 0,
-    bottom: 0,
   },
 }
 
 const TriangleGenerator = () => {
   const [triangleParams, setTriangleParams] =
     React.useState<TriangleParams>(defaultParams)
-
+  console.log('triangleParams:', triangleParams)
   return (
     <>
       <Head>
@@ -35,7 +28,6 @@ const TriangleGenerator = () => {
           params={triangleParams}
           setParams={setTriangleParams}
         />
-        <TriangleTypes params={triangleParams} setParams={setTriangleParams} />
         <TriangleSizes params={triangleParams} setParams={setTriangleParams} />
       </div>
     </>
