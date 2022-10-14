@@ -16,4 +16,5 @@ export interface TriangleParams {
     width: number
     height: number
   }
+  color: string
 }

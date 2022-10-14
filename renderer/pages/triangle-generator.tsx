@@ -2,7 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 
 import {TriangleParams} from '../components/triangle-generator/_types'
-
+import {stylesTemplates} from '../components/triangle-generator/_consts'
 import TriangleDirections from '../components/triangle-generator/triangle-directions'
 import TriangleSizes from '../components/triangle-generator/triangle-sizes'
 
@@ -12,12 +12,17 @@ const defaultParams: TriangleParams = {
     width: 200,
     height: 100,
   },
+  color: '#ff0000',
 }
 
 const TriangleGenerator = () => {
   const [triangleParams, setTriangleParams] =
     React.useState<TriangleParams>(defaultParams)
-  console.log('triangleParams:', triangleParams)
+  const computedStyles = stylesTemplates[triangleParams.direction](
+    triangleParams.sizes,
+    triangleParams.color,
+    'jss',
+  )
   return (
     <>
       <Head>
@@ -29,6 +34,9 @@ const TriangleGenerator = () => {
           setParams={setTriangleParams}
         />
         <TriangleSizes params={triangleParams} setParams={setTriangleParams} />
+        <div className="w-96 h-96 border border-gray-400 flex items-center justify-center">
+          <div className="duration-150" style={computedStyles} />
+        </div>
       </div>
     </>
   )
