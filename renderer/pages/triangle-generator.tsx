@@ -65,7 +65,8 @@ const TriangleGenerator = () => {
             resetHandler={() => setTriangleParams(defaultParams)}
           >
             <div className="flex items-center justify-center w-full h-full">
-              <div className="duration-150" style={computedStyles} />
+              {/* TODO */}
+              <div className="duration-150" style={computedStyles as any} />
             </div>
           </BlockWrapper>
           <BlockWrapper>
