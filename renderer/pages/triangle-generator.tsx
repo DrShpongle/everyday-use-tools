@@ -70,7 +70,7 @@ const TriangleGenerator = () => {
           >
             <LookAtResult styles={lookAtResultStyles} />
           </BlockWrapper>
-          <BlockWrapper>
+          <BlockWrapper className="flex flex-col space-y-12">
             <TriangleSizes
               params={triangleParams}
               setParams={setTriangleParams}

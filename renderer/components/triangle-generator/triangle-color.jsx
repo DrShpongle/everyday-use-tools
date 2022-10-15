@@ -31,7 +31,7 @@ const ColorPickerButton = ({triangleColor, onChange}) => {
 }
 
 const TriangleColor = ({params, setParams}) => (
-  <>
+  <div>
     <h3 className="font-medium w-full text-lg mb-4 leading-none">
       Set color (HEX):
     </h3>
@@ -61,7 +61,7 @@ const TriangleColor = ({params, setParams}) => (
         />
       </div>
     </div>
-  </>
+  </div>
 )
 
 export default TriangleColor
