@@ -2,14 +2,7 @@ import * as React from 'react'
 import {HexColorPicker, HexColorInput} from 'react-colorful'
 import {useCopyToClipboard, useClickAway, useLocalStorage} from 'react-use'
 
-import {
-  IconArrowUp,
-  IconLink,
-  IconColorSwatch,
-  IconClipboardCopy,
-  IconRefresh,
-  IconTwitter,
-} from '../../lib/icons'
+import {IconColorSwatch} from '../../lib/icons'
 
 const ColorPickerButton = ({triangleColor, onChange}) => {
   const colorPickerRef = React.useRef(null)
@@ -38,7 +31,7 @@ const ColorPickerButton = ({triangleColor, onChange}) => {
 }
 
 const TriangleColor = ({params, setParams}) => (
-  <div className="w-full">
+  <>
     <h3 className="font-medium w-full text-lg mb-4 leading-none">
       Set color (HEX):
     </h3>
@@ -68,7 +61,7 @@ const TriangleColor = ({params, setParams}) => (
         />
       </div>
     </div>
-  </div>
+  </>
 )
 
 export default TriangleColor

@@ -7,6 +7,8 @@ import BlockWrapper from '../components/triangle-generator/block-wrapper'
 import TriangleDirections from '../components/triangle-generator/triangle-directions'
 import TriangleSizes from '../components/triangle-generator/triangle-sizes'
 import TriangleColor from '../components/triangle-generator/triangle-color'
+import LookAtResult from '../components/triangle-generator/look-at-result'
+import GrabTheResult from '../components/triangle-generator/grab-the-result'
 
 const defaultParams: TriangleParams = {
   direction: 'top',
@@ -35,11 +37,12 @@ const TitleTriangle: React.FC<{color: string}> = ({color}) => {
 const TriangleGenerator = () => {
   const [triangleParams, setTriangleParams] =
     React.useState<TriangleParams>(defaultParams)
-  const computedStyles = stylesTemplates[triangleParams.direction](
+  const lookAtResultStyles = stylesTemplates[triangleParams.direction](
     triangleParams.sizes,
     triangleParams.color,
-    'jss',
+    'demo',
   )
+
   return (
     <>
       <Head>
@@ -63,11 +66,9 @@ const TriangleGenerator = () => {
           <BlockWrapper
             title="Look at result"
             resetHandler={() => setTriangleParams(defaultParams)}
+            className="flex justify-center items-center"
           >
-            <div className="flex items-center justify-center w-full h-full">
-              {/* TODO */}
-              <div className="duration-150" style={computedStyles as any} />
-            </div>
+            <LookAtResult styles={lookAtResultStyles} />
           </BlockWrapper>
           <BlockWrapper>
             <TriangleSizes
@@ -79,7 +80,12 @@ const TriangleGenerator = () => {
               setParams={setTriangleParams}
             />
           </BlockWrapper>
-          <BlockWrapper>123</BlockWrapper>
+          <BlockWrapper
+            title="Grab the result"
+            className="flex flex-col items-center space-y-6"
+          >
+            <GrabTheResult params={triangleParams} />
+          </BlockWrapper>
         </div>
       </div>
     </>
