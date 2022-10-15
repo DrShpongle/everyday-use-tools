@@ -32,7 +32,7 @@ const TriangleDirections: React.FC<{
   setParams: React.Dispatch<React.SetStateAction<TriangleParams>>
 }> = ({params, setParams}) => {
   return (
-    <div className="relative py-8">
+    <div className="relative py-8 flex justify-center w-full">
       <div className="grid grid-cols-2 grid-rows-2 w-64 h-64">
         {diagonalDirections.map((item) => (
           <TriangleDirection

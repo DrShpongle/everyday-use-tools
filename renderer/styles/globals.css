@@ -13,3 +13,26 @@
     @apply text-white font-bold px-4 py-2 rounded bg-blue-600 hover:bg-blue-500;
   }
 }
+
+:root {
+  --bg-color: white;
+  --dot-color: gray;
+  --dot-size: 1px;
+  --dot-space: 12px;
+}
+
+body {
+  background: linear-gradient(
+        90deg,
+        var(--bg-color) calc(var(--dot-space) - var(--dot-size)),
+        transparent 1%
+      )
+      center,
+    linear-gradient(
+        var(--bg-color) calc(var(--dot-space) - var(--dot-size)),
+        transparent 1%
+      )
+      center,
+    var(--dot-color);
+  background-size: var(--dot-space) var(--dot-space);
+}

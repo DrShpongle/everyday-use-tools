@@ -1,17 +1,18 @@
-// type Direction =
-//   | 'top'
-//   | 'topRight'
-//   | 'right'
-//   | 'bottomRight'
-//   | 'bottom'
-//   | 'bottomLeft'
-//   | 'left'
-//   | 'topLeft'
+enum Directions {
+  Top = 'top',
+  TopRight = 'topRight',
+  Right = 'right',
+  BottomRight = 'bottomRight',
+  Bottom = 'bottom',
+  BottomLeft = 'bottomLeft',
+  Left = 'left',
+  TopLeft = 'topLeft',
+}
 
-// type Type = 'equilateral' | 'isosceles' | 'scalene'
+type DirectionsType = `${Directions}`
 
 export interface TriangleParams {
-  direction: string
+  direction: DirectionsType
   sizes: {
     width: number
     height: number
