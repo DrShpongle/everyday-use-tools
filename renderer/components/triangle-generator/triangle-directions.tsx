@@ -12,18 +12,18 @@ const TriangleDirection = ({item, params, setParams}) => {
     })
   }
   return (
-    <div
+    <button
       key={`key-${item.direction}`}
       className={cx(
-        'cursor-pointer border border-gray-400 hover:text-gray-700 hover:bg-gray-300 transition-colors duration-75 grid place-items-center',
+        'cursor-pointer border border-gray-400 hover:text-gray-700 transition-colors duration-75 grid place-items-center',
         item.direction === params.direction
           ? 'text-gray-700 bg-gray-300'
-          : 'text-gray-500 bg-gray-100',
+          : 'text-gray-500 bg-gray-100 hover:bg-gray-200',
       )}
       onClick={switchDirectionHandler}
     >
       <IconArrowUp className={cx('w-6 transform', item.arrowClasses)} />
-    </div>
+    </button>
   )
 }
 
