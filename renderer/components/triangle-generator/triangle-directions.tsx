@@ -4,19 +4,19 @@ import cx from 'classnames'
 import {TriangleParams} from './_types'
 import {IconArrowUp} from '../../lib/icons'
 
-const TriangleDirection = ({item, params, setParams}) => {
+const TriangleDirection = ({item, currentDirection, setParams}) => {
   const switchDirectionHandler = () => {
-    setParams({
+    setParams((params: TriangleParams) => ({
       ...params,
       direction: item.direction,
-    })
+    }))
   }
   return (
     <button
       key={`key-${item.direction}`}
       className={cx(
         'cursor-pointer border border-gray-400 hover:text-gray-700 transition-colors duration-75 grid place-items-center',
-        item.direction === params.direction
+        item.direction === currentDirection
           ? 'text-gray-700 bg-gray-300'
           : 'text-gray-500 bg-gray-100 hover:bg-gray-200',
       )}
@@ -28,9 +28,9 @@ const TriangleDirection = ({item, params, setParams}) => {
 }
 
 const TriangleDirections: React.FC<{
-  params: TriangleParams
+  currentDirection: string
   setParams: React.Dispatch<React.SetStateAction<TriangleParams>>
-}> = ({params, setParams}) => {
+}> = ({currentDirection, setParams}) => {
   return (
     <div className="relative py-8 flex justify-center w-full">
       <div className="grid grid-cols-2 grid-rows-2 w-64 h-64">
@@ -38,7 +38,7 @@ const TriangleDirections: React.FC<{
           <TriangleDirection
             key={`key-${item.direction}`}
             item={item}
-            params={params}
+            currentDirection={currentDirection}
             setParams={setParams}
           />
         ))}
@@ -48,7 +48,7 @@ const TriangleDirections: React.FC<{
           <TriangleDirection
             key={`key-${item.direction}`}
             item={item}
-            params={params}
+            currentDirection={currentDirection}
             setParams={setParams}
           />
         ))}

@@ -59,7 +59,7 @@ const TriangleGenerator = () => {
         <div className="grid md:grid-rows-2 grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 w-full">
           <BlockWrapper title="Set direction">
             <TriangleDirections
-              params={triangleParams}
+              currentDirection={triangleParams.direction}
               setParams={setTriangleParams}
             />
           </BlockWrapper>
