@@ -30,7 +30,7 @@ const TriangleDirection = ({item, currentDirection, setParams}) => {
 const TriangleDirections: React.FC<{
   currentDirection: string
   setParams: React.Dispatch<React.SetStateAction<TriangleParams>>
-}> = ({currentDirection, setParams}) => {
+}> = React.memo(({currentDirection, setParams}) => {
   return (
     <div className="relative py-8 flex justify-center w-full">
       <div className="grid grid-cols-2 grid-rows-2 w-64 h-64">
@@ -59,7 +59,7 @@ const TriangleDirections: React.FC<{
       />
     </div>
   )
-}
+})
 
 export default TriangleDirections
 
